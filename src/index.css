@@ -1,0 +1,25 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: 'Outfit', sans-serif;
+}
+
+.rich-text {
+    font-size: 15px ;
+    color: #7A7B7D;
+}
+
+.rich-text p{
+   margin-bottom: 16px;
+}
+
+.rich-text h1{
+    font-size:36px;
+    font-weight:800px;
+    color:#252525;
+}
