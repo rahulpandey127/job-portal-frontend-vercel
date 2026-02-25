@@ -8,6 +8,7 @@ import { AppContext } from "../context/AppContext";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
 import { TailSpin } from "react-loader-spinner";
+import Loading from "../components/Loading";
 
 const Application = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -19,9 +20,11 @@ const Application = () => {
     fetchUserData,
     userApplications,
     setApplicants,
+    status,
   } = useContext(AppContext);
   const { user } = useUser();
   const { getToken } = useAuth();
+
   let uploadResume = async () => {
     const token = await getToken();
 
@@ -38,6 +41,7 @@ const Application = () => {
       );
       if (data.success) {
         await fetchUserData();
+
         toast.success(data.message);
       } else {
         toast.error(data.message);
@@ -71,7 +75,7 @@ const Application = () => {
       fetchUserData();
     }
   }, [user]);
-
+  // console.log("status" + status);
   return (
     <>
       <Navbar />
@@ -127,64 +131,67 @@ const Application = () => {
         </div>
         <h2 className="text-xl font-semibold mb-4">Jobs Applied</h2>
         {userApplications.length === 0 ? (
-          <div className="w-full h-[40vh] flex justify-center items-center">
-            <TailSpin
-              height="80"
-              width="80"
-              color="#4fa94d"
-              ariaLabel="tail-spin-loading"
-              visible={true}
-            />
+          <div className="w-full h-[40vh] flex justify-center">
+            <h2 className="text-2xl font-semibold">No Jobs Applied</h2>
           </div>
+        ) : status ? (
+          <>
+            {" "}
+            <>
+              <table className="min-w-full border rounded-lg">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 border-b text-left">Company</th>
+                    <th className="py-3 px-4 border-b text-left">Job Title</th>
+                    <th className="py-3 px-4 border-b text-left max-sm:hidden">
+                      Location
+                    </th>
+                    <th className="py-3 px-4 border-b text-left max-sm:hidden">
+                      Date
+                    </th>
+                    <th className="py-3 px-4 border-b text-left">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userApplications.map((job, index) =>
+                    status ? (
+                      <tr>
+                        <td className="py-3 px-4 flex items-center gap-2 border-b">
+                          <img
+                            src={job?.companyId?.image}
+                            alt="logo"
+                            className="w-8 h-8"
+                          />
+                          {job?.companyId?.name}
+                        </td>
+                        <td className="py-2 px-4 border-b">
+                          {job?.jobId?.title}
+                        </td>
+                        <td className="py-2 px-4 border-b max-sm:hidden">
+                          {job?.jobId?.location}
+                        </td>
+                        <td className="py-2 px-4 border-b max-sm:hidden">
+                          {moment(job?.date).format("DD-MM-YYYY")}
+                        </td>
+                        <td className="py-2 px-4 border-b">
+                          <span
+                            className={`${job.status === "Accepted" ? "bg-green-100" : job.status === "Rejected" ? "bg-red-100" : "bg-blue-100"} px-4 py-1.5 rounded`}
+                          >
+                            {job?.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ) : null,
+                  )}
+                </tbody>
+              </table>
+            </>
+          </>
         ) : (
           <>
-            <table className="min-w-full border rounded-lg">
-              <thead>
-                <tr>
-                  <th className="py-3 px-4 border-b text-left">Company</th>
-                  <th className="py-3 px-4 border-b text-left">Job Title</th>
-                  <th className="py-3 px-4 border-b text-left max-sm:hidden">
-                    Location
-                  </th>
-                  <th className="py-3 px-4 border-b text-left max-sm:hidden">
-                    Date
-                  </th>
-                  <th className="py-3 px-4 border-b text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userApplications.map((job, index) =>
-                  true ? (
-                    <tr>
-                      <td className="py-3 px-4 flex items-center gap-2 border-b">
-                        <img
-                          src={job?.companyId?.image}
-                          alt="logo"
-                          className="w-8 h-8"
-                        />
-                        {job?.companyId?.name}
-                      </td>
-                      <td className="py-2 px-4 border-b">
-                        {job?.jobId?.title}
-                      </td>
-                      <td className="py-2 px-4 border-b max-sm:hidden">
-                        {job?.jobId?.location}
-                      </td>
-                      <td className="py-2 px-4 border-b max-sm:hidden">
-                        {moment(job?.date).subtract(10, "days").calendar()}
-                      </td>
-                      <td className="py-2 px-4 border-b">
-                        <span
-                          className={`${job.status === "Accepted" ? "bg-green-100" : job.status === "Rejected" ? "bg-red-100" : "bg-blue-100"} px-4 py-1.5 rounded`}
-                        >
-                          {job?.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ) : null,
-                )}
-              </tbody>
-            </table>
+            <div className=" h-[10vh] flex justify-between w-20 mx-auto my-20">
+              <TailSpin />
+            </div>
           </>
         )}
       </div>

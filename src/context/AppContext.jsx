@@ -27,6 +27,7 @@ export const AppContextProvider = (props) => {
   let [userData, setUserData] = useState(null);
   let [userApplications, setUserApplications] = useState([]);
   let [applicants, setApplicants] = useState([]);
+  let [status, setStatus] = useState(false);
   //Function to fetch jobs
   const fetchJobs = async () => {
     let { data } = await axios.get(`${backendUrl}/api/jobs/`);
@@ -94,6 +95,7 @@ export const AppContextProvider = (props) => {
       console.log(data);
       if (data.success) {
         setUserApplications(data.application);
+        setStatus(data.success);
       } else {
         toast.error(data.message);
       }
@@ -132,6 +134,8 @@ export const AppContextProvider = (props) => {
     applicants,
     setApplicants,
     user,
+    status,
+    setStatus,
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
