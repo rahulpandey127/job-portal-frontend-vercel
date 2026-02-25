@@ -3,7 +3,7 @@ import { assets, viewApplicationsPageData } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { TailSpin } from "react-loader-spinner";
+import { Hourglass, TailSpin } from "react-loader-spinner";
 // import jobApplication from "../../../server/models/jobApplication";
 
 const ViewApplications = () => {
@@ -66,13 +66,15 @@ const ViewApplications = () => {
   return (
     <>
       {applicants.length == 0 ? (
-        <div className="w-full flex justify-center items-center h-[90vh]">
-          <TailSpin
+        <div className="w-full flex justify-center items-center h-[70vh]">
+          <Hourglass
+            visible={true}
             height="80"
             width="80"
-            color="#4fa94d"
-            ariaLabel="tail-spin-loading"
-            visible={true}
+            ariaLabel="hourglass-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            colors={["#306cce", "#72a1ed"]}
           />
         </div>
       ) : (

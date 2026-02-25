@@ -8,7 +8,6 @@ import { AppContext } from "../context/AppContext";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
 import { TailSpin } from "react-loader-spinner";
-import Loading from "../components/Loading";
 
 const Application = () => {
   const [isEdit, setIsEdit] = useState(false);

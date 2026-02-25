@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { TailSpin } from "react-loader-spinner";
+import { Hourglass, TailSpin } from "react-loader-spinner";
 
 const ManageJobs = () => {
   const navigate = useNavigate();
@@ -126,13 +126,15 @@ const ManageJobs = () => {
       </div>
     )
   ) : (
-    <div className="flex justify-center items-center h-[90vh]">
-      <TailSpin
+    <div className="flex justify-center items-center h-[80vh]">
+      <Hourglass
+        visible={true}
         height="80"
         width="80"
-        color="#4fa94d"
-        ariaLabel="tail-spin-loading"
-        visible={true}
+        ariaLabel="hourglass-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        colors={["#306cce", "#72a1ed"]}
       />
     </div>
   );
