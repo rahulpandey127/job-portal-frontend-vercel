@@ -48,7 +48,7 @@ const JobListing = () => {
       job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
 
     const newFilteredJobs = jobs
-      .slice()
+      ?.slice()
       .reverse()
       .filter(
         (job) =>
@@ -57,7 +57,7 @@ const JobListing = () => {
           matchesTitle(job) &&
           matchesSearchLocation(job),
       );
-  
+
     setFilteredJobs(newFilteredJobs);
     setCurrentPage(1);
   }, [jobs, selectedCategories, selectedLocations, searchFilter]);
@@ -158,13 +158,13 @@ const JobListing = () => {
         <p className="mb-8">Get Your desired job from top companies</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 ">
           {filteredJobs
-            .slice((currentPage - 1) * 6, currentPage * 6)
+            ?.slice((currentPage - 1) * 6, currentPage * 6)
             .map((job, index) => (
               <JobCard key={index} job={job} />
             ))}
         </div>
         {/*Pagination*/}
-        {filteredJobs.length > 0 && (
+        {filteredJobs?.length > 0 && (
           <div className="flex items-center justify-center space-x-2 mt-10">
             <a href="#job-list">
               <img
@@ -175,7 +175,7 @@ const JobListing = () => {
                 }}
               />
             </a>
-            {Array.from({ length: Math.ceil(filteredJobs.length / 6) }).map(
+            {Array.from({ length: Math.ceil(filteredJobs?.length / 6) }).map(
               (_, index) => (
                 <a
                   href="#job-list"

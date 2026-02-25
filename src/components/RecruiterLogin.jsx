@@ -60,7 +60,8 @@ const RecruiterLogin = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log("errror here" + error);
+      toast.error(error.message);
     }
   };
 
